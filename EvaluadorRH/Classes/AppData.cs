@@ -1,5 +1,4 @@
 ﻿using HandyControl.Controls;
-using Plugin.Xamarin.Tools.Shared.Classes;
 using Plugin.Xamarin.Tools.Shared.Reflection;
 using SQLHelper;
 using System;

@@ -61,16 +61,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Plugin.Xamarin.Tools, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Xamarin.Tools\Xamarin.Tools\bin\Debug\net462\Plugin.Xamarin.Tools.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Tools">
-      <HintPath>..\..\Xamarin.Tools\Tools\bin\Debug\netstandard2.0\Tools.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -188,6 +181,14 @@
     <ProjectReference Include="..\..\..\Xamarin.Tools\SQLHelper\SQLHelper.csproj">
       <Project>{E018AF0A-8D56-44C3-AE35-6F77B541352C}</Project>
       <Name>SQLHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Xamarin.Tools\Tools\Tools.csproj">
+      <Project>{02C195AA-6CE7-4DCB-A899-2380C1883C6C}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Xamarin.Tools\Xamarin.Tools\Xamarin.Tools.csproj">
+      <Project>{88363e3d-4948-4165-80ef-ffd8af51b82b}</Project>
+      <Name>Xamarin.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
