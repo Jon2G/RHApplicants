@@ -1,0 +1,41 @@
+﻿<Border x:Class="EvaluadorRH.Dialogs.ApplicantAccions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EvaluadorRH.Dialogs"
+        xmlns:hc="https://handyorg.github.io/handycontrol" x:Name="Me"
+                CornerRadius="10"
+        Width="314.5"
+        Height="139.5"
+        mc:Ignorable="d" Background="{DynamicResource RegionBrush}">
+    <hc:SimplePanel DataContext="{Binding ElementName=Me}">
+        <StackPanel>
+            <TextBlock Text="{Binding ApplicantName}" FontSize="18"/>
+            <Grid Background="{DynamicResource SecondaryRegionBrush}" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <hc:ButtonGroup VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+
+                    <Button Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto">
+                        <StackPanel>
+                            <Image Source="/EvaluadorRH;component/Resources/ab-testing.png" Height="35"/>
+                            <TextBlock Text="Aplicar evaluación"/>
+                        </StackPanel>
+                    </Button>
+                </hc:ButtonGroup>
+
+                <Button Grid.Column="1" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto">
+                    <StackPanel>
+                        <Image Source="/EvaluadorRH;component/Resources/testing.png" Height="35"/>
+                        <TextBlock Text="Ver evaluaciones"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </StackPanel>
+        <Button Width="22" Height="22" Command="hc:ControlCommands.Close" Style="{StaticResource ButtonIcon}" Foreground="{DynamicResource PrimaryBrush}" hc:IconElement.Geometry="{StaticResource ErrorGeometry}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,4,0"/>
+    </hc:SimplePanel>
+</Border>

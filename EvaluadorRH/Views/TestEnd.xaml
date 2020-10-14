@@ -1,0 +1,55 @@
+﻿<controls:NavigationUserControl  xmlns:controls="clr-namespace:EvaluadorRH.Controls"
+                                 x:Class="EvaluadorRH.Views.TestEnd"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EvaluadorRH.Views" xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d" x:Name="Me"
+             xmlns:classes="clr-namespace:EvaluadorRH.Classes"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <hc:TransitioningContentControl>
+
+
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <hc:Card Margin="10" Background="{DynamicResource MainContentBackgroundBrush}">
+                <StackPanel DataContext="{Binding Model,ElementName=Me}">
+                    <Image Source="/EvaluadorRH;component/Resources/like.png" Height="90"/>
+                    
+                    <TextBlock FontSize="20" FontWeight="Bold" 
+                                       DataContext="{x:Static classes:AppData.Instace}" Text="¡Gracias!" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="20"
+                                       DataContext="{x:Static classes:AppData.Instace}" Text="Por favor,muestre esta pantalla a su reclutador." />
+
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock FontSize="18" FontWeight="Bold" 
+                                       DataContext="{x:Static classes:AppData.Instace}" Text="{Binding Admin.Name,StringFormat='Aplicador(a): {0}'}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding ApplicantName,StringFormat='Aspirante: {0}'}"/>
+                        <TextBlock FontSize="18" Text=""/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding TestDate,StringFormat='Fecha: {0}'}"/>
+                        <TextBlock FontSize="18" Text=""/>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Tiempo,StringFormat='Duración total: {0}'}"/>
+                        <TextBlock FontSize="18" Text=""/>
+                    </StackPanel>
+                    <hc:ButtonGroup>
+                        <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" Background="{DynamicResource DarkSuccessBrush}"
+                    Foreground="White" Content="Ok" FontSize="25" Click="Go_Click"
+                    Height="Auto" Width="Auto" Margin="10" HorizontalAlignment="Stretch"/>
+                    </hc:ButtonGroup>
+                </StackPanel>
+            </hc:Card>
+        </Grid>
+
+
+    </hc:TransitioningContentControl>
+</controls:NavigationUserControl>

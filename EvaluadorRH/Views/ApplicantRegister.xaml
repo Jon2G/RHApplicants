@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="EvaluadorRH.Views.ApplicantRegister"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EvaluadorRH.Views" xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"  x:Name="Me" Background="{DynamicResource MainContentBackgroundBrush}"
+             d:DesignHeight="531" d:DesignWidth="831">
+    <hc:TransitioningContentControl >
+
+        <StackPanel DataContext="{Binding Applicant,ElementName=Me}" Margin="5">
+
+            <hc:Card Background="{DynamicResource SecondaryRegionBrush}" Margin="10" >
+                <StackPanel>
+                    <hc:Card MouseDown="Card_MouseDown" BorderBrush="{DynamicResource BorderBrush}" Margin="3" Background="{DynamicResource LightPrimaryBrush}" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal" >
+                            <Image Source="/EvaluadorRH;component/Resources/back.png" Height="35" HorizontalAlignment="Left"/>
+                            <TextBlock VerticalAlignment="Center" Text="Volver y descartar"/>
+                        </StackPanel>
+                    </hc:Card>
+
+
+
+                    <Image Source="/EvaluadorRH;component/Resources/bot.png" Height="90"/>
+                    <TextBlock Text="Bienvenido(a)."  FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Text="Por favor ingrese los siguientes datos y presione continuar cuando este listo." FontSize="18"/>
+
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="65*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Nombre(s):" FontSize="18"/>
+                                <hc:TextBox Grid.Column="1" Text="{Binding Name}"/>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="65*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Apellido Paterno:" FontSize="18"/>
+                                <hc:TextBox Grid.Column="1" Text="{Binding SurName1}"/>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="65*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Apellido Materno:" FontSize="18"/>
+                                <hc:TextBox Grid.Column="1" Text="{Binding SurName2}"/>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="65*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Escuela:" FontSize="18"/>
+                                <hc:TextBox Grid.Column="1" Text="{Binding School}"/>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="65*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Grado/Semestre:" FontSize="18"/>
+                                <hc:TextBox Grid.Column="1" Text="{Binding Grade}"/>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="65*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Edad:" FontSize="18"/>
+                                <hc:NumericUpDown Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Age}"/>
+                            </Grid>
+
+                            <StackPanel>
+                                <TextBlock Grid.Column="0" Text="Mi lenguaje de programación favorito es..:" FontSize="18"/>
+                                <hc:TextBox AcceptsReturn="True" Text="{Binding FavoriteLanguaje}"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </StackPanel>
+            </hc:Card>
+
+            <Button Margin="10" VerticalAlignment="Stretch" Background="{DynamicResource DarkSuccessBrush}"
+                    Foreground="White" Content="Continuar" FontSize="18" Click="Go_Click"
+                    Height="Auto" Width="Auto"  HorizontalAlignment="Stretch"/>
+        </StackPanel>
+
+    </hc:TransitioningContentControl>
+</UserControl>
