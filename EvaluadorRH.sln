@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvaluadorRH", "EvaluadorRH\EvaluadorRH.csproj", "{0C5557A7-701B-49F9-8FAD-1495DD722F6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLHelper", "..\..\Xamarin.Tools\SQLHelper\SQLHelper.csproj", "{E018AF0A-8D56-44C3-AE35-6F77B541352C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools", "..\..\..\Documents\Jonathan\Xamarin.Tools\Tools\Tools.csproj", "{08A6454B-38D5-492B-BC3A-11991BBEB0E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools", "..\..\Xamarin.Tools\Tools\Tools.csproj", "{02C195AA-6CE7-4DCB-A899-2380C1883C6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLHelper", "..\..\..\Documents\Jonathan\Xamarin.Tools\SQLHelper\SQLHelper.csproj", "{8E4F2A93-4814-484A-8429-433576F898E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xamarin.Tools", "..\..\Xamarin.Tools\Xamarin.Tools\Xamarin.Tools.csproj", "{88363E3D-4948-4165-80EF-FFD8AF51B82B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xamarin.Tools", "..\..\..\Documents\Jonathan\Xamarin.Tools\Xamarin.Tools\Xamarin.Tools.csproj", "{BCECBE41-D322-4FD4-A5D7-27AFDB4A048E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,18 @@ Global
 		{0C5557A7-701B-49F9-8FAD-1495DD722F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C5557A7-701B-49F9-8FAD-1495DD722F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C5557A7-701B-49F9-8FAD-1495DD722F6A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E018AF0A-8D56-44C3-AE35-6F77B541352C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E018AF0A-8D56-44C3-AE35-6F77B541352C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E018AF0A-8D56-44C3-AE35-6F77B541352C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E018AF0A-8D56-44C3-AE35-6F77B541352C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02C195AA-6CE7-4DCB-A899-2380C1883C6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02C195AA-6CE7-4DCB-A899-2380C1883C6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02C195AA-6CE7-4DCB-A899-2380C1883C6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02C195AA-6CE7-4DCB-A899-2380C1883C6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88363E3D-4948-4165-80EF-FFD8AF51B82B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88363E3D-4948-4165-80EF-FFD8AF51B82B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88363E3D-4948-4165-80EF-FFD8AF51B82B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88363E3D-4948-4165-80EF-FFD8AF51B82B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08A6454B-38D5-492B-BC3A-11991BBEB0E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A6454B-38D5-492B-BC3A-11991BBEB0E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A6454B-38D5-492B-BC3A-11991BBEB0E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A6454B-38D5-492B-BC3A-11991BBEB0E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E4F2A93-4814-484A-8429-433576F898E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E4F2A93-4814-484A-8429-433576F898E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E4F2A93-4814-484A-8429-433576F898E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E4F2A93-4814-484A-8429-433576F898E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCECBE41-D322-4FD4-A5D7-27AFDB4A048E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCECBE41-D322-4FD4-A5D7-27AFDB4A048E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCECBE41-D322-4FD4-A5D7-27AFDB4A048E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCECBE41-D322-4FD4-A5D7-27AFDB4A048E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

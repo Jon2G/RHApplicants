@@ -178,20 +178,6 @@
     <EmbeddedResource Include="EditaLite.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Xamarin.Tools\SQLHelper\SQLHelper.csproj">
-      <Project>{E018AF0A-8D56-44C3-AE35-6F77B541352C}</Project>
-      <Name>SQLHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Xamarin.Tools\Tools\Tools.csproj">
-      <Project>{02C195AA-6CE7-4DCB-A899-2380C1883C6C}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Xamarin.Tools\Xamarin.Tools\Xamarin.Tools.csproj">
-      <Project>{88363e3d-4948-4165-80ef-ffd8af51b82b}</Project>
-      <Name>Xamarin.Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\programmer.png" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +201,20 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\like.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\SQLHelper\SQLHelper.csproj">
+      <Project>{8e4f2a93-4814-484a-8429-433576f898e5}</Project>
+      <Name>SQLHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\Tools\Tools.csproj">
+      <Project>{08a6454b-38d5-492b-bc3a-11991bbeb0e6}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\Xamarin.Tools\Xamarin.Tools.csproj">
+      <Project>{bcecbe41-d322-4fd4-a5d7-27afdb4a048e}</Project>
+      <Name>Xamarin.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
