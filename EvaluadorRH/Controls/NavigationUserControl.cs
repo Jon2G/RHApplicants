@@ -72,7 +72,7 @@ namespace EvaluadorRH.Controls
             return true;
         }
 
-        public void OnNavigatedFrom(NavigationContext NavigationContext)
+        public virtual void OnNavigatedFrom(NavigationContext NavigationContext)
         {
             this.NavigationContext = NavigationContext;
         }

@@ -37,7 +37,7 @@ namespace EvaluadorRH.Views
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             this.Model.Password = this.Password.Password;
-            this.Model.Password = string.Empty;
+            this.Password.Password = string.Empty;
             if (this.Model.Login() is Admin admin)
             {
                 this.Model.Clear();
