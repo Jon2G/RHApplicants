@@ -1,12 +1,12 @@
 ﻿using EvaluadorRH.Classes;
-using Plugin.Xamarin.Tools.Shared.Classes;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tools;
+using Kit;
 
 namespace EvaluadorRH.ViewModels
 {

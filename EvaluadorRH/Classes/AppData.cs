@@ -1,6 +1,7 @@
 ﻿using HandyControl.Controls;
-using Plugin.Xamarin.Tools.Shared.Reflection;
+using Kit;
 using SQLHelper;
+using SQLHelper.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Tools;
 using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace EvaluadorRH.Classes
@@ -28,7 +28,7 @@ namespace EvaluadorRH.Classes
             SQLHelper.SQLHelper sqlhelper = SQLHelper.SQLHelper.Init(Environment.CurrentDirectory, Debugger.IsAttached);
             Log.Init(sqlhelper.LibraryPath, CriticalLog);
             AppData.SQLHLite = new SQLHLite("1.0.2", "Evaluador.db");
-            AppData.SQLHLite.OnCreateDB += AppData.Instace.CreateDb;
+            AppData.SQLHLite.SetDbScriptResource(typeof(AppData), "EditaLite.sql");
             AppData.SQLHLite.RevisarBaseDatos();
         }
 
@@ -37,35 +37,6 @@ namespace EvaluadorRH.Classes
             if (sender is string s)
             {
                 MessageBox.Show(s, "Error critico!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void CreateDb(object sender, EventArgs e)
-        {
-            if (sender is SQLite.SQLiteConnection SQLHLite)
-            {
-                AppData.SQLHLite.OnCreateDB -= AppData.Instace.CreateDb;
-                try
-                {
-                    string sql = String.Empty;
-                    using (ReflectionCaller caller = new ReflectionCaller())
-                    {
-                        caller.GetAssembly(this.GetType());
-                        using (Stream stream = caller.GetResource("EditaLite.sql"))
-                        {
-                            using (StreamReader reader = new System.IO.StreamReader(stream, Encoding.ASCII))
-                            {
-                                sql = reader.ReadToEnd();
-                            }
-                        }
-                    }
-                    AppData.SQLHLite.Batch(sql);
-                    AppData.SQLHLite.OnCreateDB -= AppData.Instace.CreateDb;
-                }
-                catch (Exception ex)
-                {
-                    Log.LogCritical(ex);
-                }
             }
         }
     }

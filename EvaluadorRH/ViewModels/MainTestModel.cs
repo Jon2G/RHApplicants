@@ -1,5 +1,5 @@
 ﻿using EvaluadorRH.Classes;
-using Plugin.Xamarin.Tools.Shared.Classes;
+
 using SQLHelper;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Tools;
+using Kit;
 
 namespace EvaluadorRH.ViewModels
 {
