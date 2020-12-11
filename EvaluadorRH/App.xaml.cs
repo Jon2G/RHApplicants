@@ -5,12 +5,16 @@ using System.Windows;
 using System;
 using Prism.Ioc;
 using EvaluadorRH.Views;
+using EvaluadorRH.Classes;
+
 namespace EvaluadorRH
 {
     public partial class App
     {
         protected override Window CreateShell()
         {
+            Locker l= new Locker();
+            l.Show();
             return Container.Resolve<MainWindow>();
         }
 

@@ -211,5 +211,19 @@
   <ItemGroup>
     <Resource Include="Resources\like.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\SQLHelper\SQLHelper.csproj">
+      <Project>{8e4f2a93-4814-484a-8429-433576f898e5}</Project>
+      <Name>SQLHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\Tools\Tools.csproj">
+      <Project>{08a6454b-38d5-492b-bc3a-11991bbeb0e6}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\Xamarin.Tools\Xamarin.Tools.csproj">
+      <Project>{bcecbe41-d322-4fd4-a5d7-27afdb4a048e}</Project>
+      <Name>Xamarin.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

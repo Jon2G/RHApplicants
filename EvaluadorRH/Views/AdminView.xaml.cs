@@ -31,6 +31,14 @@ namespace EvaluadorRH.Views
         {
             this.Model = new AdminViewModel();
             InitializeComponent();
+
+
+        }
+        public override void OnNavigatedFrom(NavigationContext NavigationContext)
+        {
+            base.OnNavigatedFrom(NavigationContext);
+            this.Model = new AdminViewModel();
+            OnPropertyChanged(nameof(Model));
         }
 
         private void Evaluar_Click(object sender, RoutedEventArgs e)
