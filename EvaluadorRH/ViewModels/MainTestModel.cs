@@ -128,8 +128,12 @@ namespace EvaluadorRH.ViewModels
         }
         private void UpdateAndStop()
         {
-            this.Timer.Stop();
-            this.DispatcherTimer.Stop();
+            if(Timer is null)
+            {
+                return;
+            }
+            this.Timer?.Stop();
+            this.DispatcherTimer?.Stop();
             this.Locker.Show();
             AppData.SQLHLite.EXEC(
                 "UPDATE MAIN_TESTS SET END_DATE=?,TIME_ELAPSED=? WHERE ID=?",
