@@ -65,7 +65,7 @@ namespace EvaluadorRH.ViewModels
 
         private Stopwatch Timer;
         private System.Windows.Threading.DispatcherTimer DispatcherTimer;
-        public string Tiempo => String.Format("{0:00}:{1:00}", Timer.Elapsed.Minutes, Timer.Elapsed.Seconds);
+        public string Tiempo => String.Format("{0}:{1:00}:{2:00}",Timer.Elapsed.Hours, Timer.Elapsed.Minutes, Timer.Elapsed.Seconds);
         private readonly Locker Locker;
         public MainTestModel(Applicant Applicant)
         {
