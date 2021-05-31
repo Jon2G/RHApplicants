@@ -1,14 +1,20 @@
-﻿<UserControl x:Class="EvaluadorRH.Views.ApplicantRegister"
+﻿<prims:NavigationUserControl  xmlns:prims="clr-namespace:Kit.WPF.Prims;assembly=Kit.WPF"
+                              x:Class="EvaluadorRH.Views.ApplicantRegister"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EvaluadorRH.Views" xmlns:hc="https://handyorg.github.io/handycontrol"
-             mc:Ignorable="d"  x:Name="Me" Background="{DynamicResource MainContentBackgroundBrush}"
+                              xmlns:viewModels="clr-namespace:EvaluadorRH.ViewModels"
+                              d:DataContext="{viewModels:ApplicantRegisterViewModel}"
+             mc:Ignorable="d"  Background="{DynamicResource MainContentBackgroundBrush}"
              d:DesignHeight="531" d:DesignWidth="831">
+    <prims:NavigationUserControl.DataContext>
+        <viewModels:ApplicantRegisterViewModel x:Name="Model"/>
+    </prims:NavigationUserControl.DataContext>
     <hc:TransitioningContentControl >
 
-        <StackPanel DataContext="{Binding Applicant,ElementName=Me}" Margin="5">
+        <StackPanel DataContext="{Binding Applicant}" Margin="5">
 
             <hc:Card Background="{DynamicResource SecondaryRegionBrush}" Margin="10" >
                 <StackPanel>
@@ -65,7 +71,9 @@
                                     <ColumnDefinition Width="65*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="Escuela:" FontSize="18"/>
-                                <hc:TextBox Grid.Column="1" Text="{Binding School}"/>
+                                <hc:ComboBox  AutoComplete="True" IsEditable="True" ItemsSource="{Binding Schools,ElementName=Model}" SelectedValuePath="Name" IsTextSearchEnabled="True" DisplayMemberPath="Name" IsTextSearchCaseSensitive="False" Grid.Column="1" Text="{Binding SchoolName}" SelectedItem="{Binding School}"/>
+
+
                             </Grid>
 
                             <Grid>
@@ -74,7 +82,7 @@
                                     <ColumnDefinition Width="65*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="Grado/Semestre:" FontSize="18"/>
-                                <hc:TextBox Grid.Column="1" Text="{Binding Grade}"/>
+                                <hc:ComboBox Grid.Column="1" Text="{Binding Grade}" ItemsSource="{Binding Grades,ElementName=Model}" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" IsEditable="True"/>
                             </Grid>
 
                             <Grid>
@@ -88,7 +96,7 @@
 
                             <StackPanel>
                                 <TextBlock Grid.Column="0" Text="Mi lenguaje de programación favorito es..:" FontSize="18"/>
-                                <hc:TextBox AcceptsReturn="True" Text="{Binding FavoriteLanguaje}"/>
+                                <hc:ComboBox Text="{Binding FavoriteLanguaje}" ItemsSource="{Binding Languajes,ElementName=Model}" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" IsEditable="True"/>
                             </StackPanel>
 
                         </StackPanel>
@@ -104,4 +112,4 @@
         </StackPanel>
 
     </hc:TransitioningContentControl>
-</UserControl>
+</prims:NavigationUserControl>

@@ -33,7 +33,7 @@
                     </MenuItem>-->
                 </Menu>
             </StackPanel>
-            <Button HorizontalAlignment="Right" Grid.Column="1" Click="ButtonConfig_OnClick" Name="ButtonConfig" Style="{StaticResource ButtonIcon}" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"/>
+            <Button HorizontalAlignment="Right" Grid.Column="1" Click="ButtonConfig_OnClick" Name="ButtonConfig" Style="{StaticResource ButtonIcon}" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource WindowsGeometry}"/>
             <Popup AllowsTransparency="True" Grid.Column="1" PlacementTarget="{Binding ElementName=ButtonConfig}" HorizontalOffset="-25" Name="PopupConfig" VerticalOffset="6" StaysOpen="False">
                 <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="4" Margin="16" Effect="{StaticResource EffectShadow2}">
                     <StackPanel Button.Click="ButtonSkins_OnClick"  Margin="10,10,10,10">

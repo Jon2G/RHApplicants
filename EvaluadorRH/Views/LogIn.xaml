@@ -1,4 +1,5 @@
-﻿<controls:NavigationUserControl  xmlns:controls="clr-namespace:EvaluadorRH.Controls"
+﻿<prims:NavigationUserControl
+    xmlns:prims="clr-namespace:Kit.WPF.Prims;assembly=Kit.WPF"
                                  x:Class="EvaluadorRH.Views.LogIn"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -64,4 +65,4 @@
             </Grid>
         </Grid>
     </hc:TransitioningContentControl>
-</controls:NavigationUserControl>
+</prims:NavigationUserControl>

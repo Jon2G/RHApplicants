@@ -1,5 +1,6 @@
 ﻿using EvaluadorRH.Classes;
 using HandyControl.Data;
+using Kit.WPF.Prims;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -22,20 +23,21 @@ namespace EvaluadorRH.Views
     /// <summary>
     /// Lógica de interacción para TestConfirmation.xaml
     /// </summary>
-    public partial class ApplicantRegister : UserControl
+    public partial class ApplicantRegister : NavigationUserControl
     {
-        public Applicant Applicant { get; set; }
+
         private readonly IRegionManager RegionManager;
         public ApplicantRegister(IRegionManager RegionManager)
         {
-            this.RegionManager = RegionManager;
-            this.Applicant = new Applicant();
+            this.RegionManager = RegionManager; 
+        
+
             InitializeComponent();
         }
 
         private void Go_Click(object sender, RoutedEventArgs e)
         {
-            this.Applicant.Register();
+            this.Model.Applicant.Register();
             GoBack();
         }
 
@@ -48,11 +50,17 @@ namespace EvaluadorRH.Views
                 Message = "¿Descartar este registro?",
                 Caption = "Atención",
                 Button = MessageBoxButton.YesNo,
-                YesContent = "No",
-                NoContent = "Sí"
-            }) == MessageBoxResult.No)
+                //YesContent = "No",
+                //NoContent = "Sí"
+            }) == MessageBoxResult.Yes)
             {
-                GoBack();
+                var region = this.RegionManager.Regions["ContentRegion"];
+                object ordersView = region.ActiveViews.FirstOrDefault(x => x is ApplicantRegister);
+                if (ordersView != null)
+                {
+                    region.Remove(ordersView);
+                }
+                this.RegionManager.RequestNavigate("ContentRegion", nameof(LogIn));
             }
         }
         private void GoBack()
@@ -63,7 +71,9 @@ namespace EvaluadorRH.Views
             {
                 region.Remove(ordersView);
             }
-            this.RegionManager.RequestNavigate("ContentRegion", nameof(LogIn));
+
+            NavigationParameters parmeters = new NavigationParameters {{"Applicant", this.Model.Applicant}};
+            this.RegionManager.RequestNavigate("ContentRegion", nameof(TestConfirmation), parmeters);
         }
     }
 }

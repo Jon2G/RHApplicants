@@ -1,4 +1,5 @@
-﻿<controls:NavigationUserControl  xmlns:controls="clr-namespace:EvaluadorRH.Controls"
+﻿<prims:NavigationUserControl
+    xmlns:prims="clr-namespace:Kit.WPF.Prims;assembly=Kit.WPF"
                                  x:Class="EvaluadorRH.Views.MainTest"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,74 +7,92 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EvaluadorRH.Views" 
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:test="clr-namespace:EvaluadorRH.Classes.Tests" 
+             xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+             xmlns:viewModels="clr-namespace:EvaluadorRH.ViewModels"
+             xmlns:cefSharpCore="clr-namespace:CefSharp;assembly=CefSharp.Core"
              mc:Ignorable="d"  x:Name="Me"
+             d:DataContext="{viewModels:MainTestModel}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <hc:TransitioningContentControl>
-        <DockPanel>
-            <ToolBar DockPanel.Dock="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" Padding="6" DataContext="{Binding Model,ElementName=Me}">
-                <TextBlock VerticalAlignment="Center" FontSize="16" Text="{Binding ApplicantName}"/>
-                <Separator Margin="10,0,0,0"/>
-                <hc:Card VerticalAlignment="Center" Margin="2" Background="{DynamicResource LightDangerBrush}">
-                    <TextBlock FontSize="16" Text="{Binding Tiempo}"/>
-                </hc:Card>
-                <Separator Margin="0,0,0,0"/>
-                <hc:StepBar Grid.Column="0" Grid.Row="3" ItemsSource="{Binding Tests}" StepIndex="{Binding TestIndex}">
+
+    <hc:TransitioningContentControl DataContext="{Binding Model,ElementName=Me}">
+        <DockPanel HorizontalAlignment="Stretch" >
+            <StackPanel DockPanel.Dock="Top">
+                <hc:StepBar Margin="3" Dock="Top" ItemsSource="{Binding Tests}" StepIndex="{Binding TestIndex}">
                     <hc:StepBar.ItemTemplate>
                         <DataTemplate>
                             <TextBlock FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Text="{Binding Title}"/>
                         </DataTemplate>
                     </hc:StepBar.ItemTemplate>
                 </hc:StepBar>
-
-
-            </ToolBar>
-            <hc:Card  Margin="5" DockPanel.Dock="Bottom" >
-                <Grid  DataContext="{Binding Model.ActualTest,ElementName=Me}">
+                <ToolBar DockPanel.Dock="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" Padding="6" >
+                    <TextBlock VerticalAlignment="Center" FontSize="16" Text="{Binding Applicant.FullName}"/>
+                    <Separator Margin="10,0,0,0"/>
+                    <hc:Card VerticalAlignment="Center" Margin="2" Background="{DynamicResource LightDangerBrush}">
+                        <TextBlock FontSize="16" Text="{Binding TimeString}"/>
+                    </hc:Card>
+                    <Separator Margin="0,0,0,0"/>
+                </ToolBar>
+            </StackPanel>
+            <hc:Card Margin="3" DockPanel.Dock="Bottom" DataContext="{Binding ActualTest}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <GridSplitter Background="Gray" Grid.Column="1"/>
-                    <DockPanel Margin="5">
-                        <DockPanel DockPanel.Dock="Top" >
-                            <TextBlock Text="{Binding Tiempo}" DockPanel.Dock="Right" Background="{DynamicResource LightDangerBrush}"/>
-                        </DockPanel>
-                        <TextBlock DockPanel.Dock="Top" FontSize="16" TextWrapping="Wrap" Text="Realize el siguiente ejercicio en el lenguaje de su preferencia:"/>
-                        <ScrollViewer  DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
-                            <hc:Card>
-                                <TextBox VerticalContentAlignment="Stretch" IsReadOnly="True" Margin="3" FontSize="14"
-                                       ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                       TextWrapping="Wrap" Text="{Binding MarkDown,Mode=OneWay}" />
-                            </hc:Card>
-                        </ScrollViewer>
-                    </DockPanel>
-                    <DockPanel Grid.Column="2" Margin="3">
-                        <Grid Margin="3" DockPanel.Dock="Bottom">
-                            <hc:ButtonGroup>
-                                <Button Click="Continuar"  Grid.Column="1" Background="{DynamicResource SuccessBrush}"  Foreground="White">
-                                    <DockPanel>
-                                        <Image MaxHeight="20" Source="/EvaluadorRH;component/Resources/right.png" DockPanel.Dock="Right"/>
-                                        <TextBlock Margin="0,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Left" Text="Confirmar y continuar"/>
-                                    </DockPanel>
-                                </Button>
-                            </hc:ButtonGroup>
-                        </Grid>
-                        <DockPanel VerticalAlignment="Center" DockPanel.Dock="Top">
-                            <TextBlock  VerticalAlignment="Center" FontSize="16" Text="Lenguaje:" Margin="0,0,10,0"/>
-                            <TextBox  FontSize="16" Text="{Binding Languaje,Mode=TwoWay}"/>
-                        </DockPanel>
-                        <DockPanel DockPanel.Dock="Bottom">
-                            <TextBlock FontSize="14" Text="Solución:" DockPanel.Dock="Top"/>
-                            <TextBox TextWrapping="Wrap" VerticalContentAlignment="Stretch"
-                             AcceptsReturn="True" Text="{Binding Solution,Mode=TwoWay}"
-                             VerticalScrollBarVisibility="Visible" Margin="5" FontSize="14"/>
-                        </DockPanel>
-                    </DockPanel>
-                </Grid>
+                    <TextBlock FontWeight="Bold" Margin="15,0" Grid.Column="0" Grid.Row="0" Text="{Binding  Model.ActualSolution.TimeString ,ElementName=Me}" Background="{DynamicResource LightDangerBrush}"/>
+                    <hc:ButtonGroup Grid.Column="1" Grid.Row="2" Margin="3" VerticalAlignment="Bottom">
+                        <Button Click="Continuar"  Background="{DynamicResource SuccessBrush}"  Foreground="White">
+                            <DockPanel>
+                                <Image MaxHeight="20" Source="/EvaluadorRH;component/Resources/right.png" DockPanel.Dock="Right"/>
+                                <TextBlock Margin="0,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Left" Text="Confirmar y continuar"/>
+                            </DockPanel>
+                        </Button>
+                    </hc:ButtonGroup>
+                    <ContentControl Grid.Column="0" Margin="5" 
+                                    Grid.Row="1" Grid.ColumnSpan="2"
+                                    Content="{Binding Model.ActualSolution ,ElementName=Me}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type test:WebSolution}">
+                                <cefSharp:ChromiumWebBrowser 
+                                            d:DataContext="{test:WebTest}"
+                                            Address="{Binding Model.ActualTest.Url,ElementName=Me, Mode=OneWay}"
+                                            AllowDrop="False">
 
+                                </cefSharp:ChromiumWebBrowser>
+
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type test:TextSolution}">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <GridSplitter Width="5" Background="{DynamicResource LightInfoBrush}" Grid.Column="0"/>
+                                    <DockPanel Margin="5" Grid.Column="0">
+                                        <TextBlock DockPanel.Dock="Top" FontSize="16" TextWrapping="Wrap" Text="Realize el siguiente ejercicio en el lenguaje de su preferencia:"/>
+
+                                        <hc:Card Content="{Binding Model.Browser,ElementName=Me}"/>
+
+                                    </DockPanel>
+                                    <DockPanel Grid.Column="1">
+                                        <TextBlock DockPanel.Dock="Top" FontSize="16" Text="Lenguaje:" Margin="5"/>
+                                        <TextBox Margin="5" DockPanel.Dock="Top"  FontSize="16" Text="{Binding Languaje,Mode=TwoWay}"/>
+                                        <TextBox DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled" AcceptsTab="True" TextWrapping="Wrap" VerticalContentAlignment="Stretch"
+                                                 AcceptsReturn="True" Text="{Binding Answer ,Mode=TwoWay}"
+                                                 VerticalScrollBarVisibility="Visible" Margin="5" FontSize="14"/>
+                                    </DockPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                </Grid>
             </hc:Card>
         </DockPanel>
     </hc:TransitioningContentControl>
-</controls:NavigationUserControl>
+</prims:NavigationUserControl>

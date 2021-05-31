@@ -1,4 +1,5 @@
-﻿<controls:NavigationUserControl  xmlns:controls="clr-namespace:EvaluadorRH.Controls"
+﻿<prims:NavigationUserControl
+    xmlns:prims="clr-namespace:Kit.WPF.Prims;assembly=Kit.WPF"
                                  x:Class="EvaluadorRH.Views.AdminView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -115,4 +116,4 @@
         </hc:Card>
 
     </hc:TransitioningContentControl>
-</controls:NavigationUserControl>
+</prims:NavigationUserControl>

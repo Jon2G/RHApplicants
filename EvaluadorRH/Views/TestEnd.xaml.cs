@@ -1,6 +1,6 @@
 ﻿using EvaluadorRH.Classes;
-using EvaluadorRH.Controls;
 using EvaluadorRH.ViewModels;
+using Kit.WPF.Prims;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;

@@ -48,5 +48,10 @@ namespace EvaluadorRH.Views
             this.RegionManager.RequestNavigate("ContentRegion",
                 new Uri(nameof(ApplicantRegister), UriKind.Relative));
         }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Locker.Show();
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using EvaluadorRH.Classes;
-
-using SQLHelper;
+using Kit.Sql.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,34 +8,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Kit;
+using Kit.Sql;
+using EvaluadorRH.Classes.Tests;
+using CefSharp.Wpf;
+using CefSharp;
+using Kit.Model;
+using Kit.Sql.Readers;
 
 namespace EvaluadorRH.ViewModels
 {
-    public class MainTestModel : ViewModelBase<MainTestModel>
+    public class MainTestModel : ModelBase
     {
-        private int Id;
-        private int _ApplicantId;
-        public int ApplicantId
+        private IWebBrowser _Browser;
+        public IWebBrowser Browser
         {
-            get => _ApplicantId;
-            set
+            get
             {
-                _ApplicantId = value;
-                OnPropertyChanged();
+                if (_Browser is null)
+                {
+                    var browser = new ChromiumWebBrowser();
+                    browser.BrowserSettings = BrowserSettings.Create();
+                    browser.BrowserSettings.DefaultEncoding = "utf-8";
+                    browser.IsBrowserInitializedChanged += Browser_IsBrowserInitializedChanged; ; ;
+                    Browser = browser;
+                }
+                return _Browser;
+            }
+            private set
+            {
+                _Browser = value;
+                Raise(() => Browser);
             }
         }
 
-        private string _ApplicantName;
-        public string ApplicantName
+        private void Browser_IsBrowserInitializedChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            get => _ApplicantName;
-            set
+            if (e.NewValue is bool b && b && e.Property.Name == nameof(Browser.IsBrowserInitialized))
             {
-                _ApplicantName = value;
-                OnPropertyChanged();
+                (sender as ChromiumWebBrowser).IsBrowserInitializedChanged -= Browser_IsBrowserInitializedChanged;
+                if (ActualTest is not null)
+                    Navigate(ActualTest);
             }
         }
+
+
+        public ObservableCollection<Solution> Solutions { get; set; }
+        public ObservableCollection<Test> Tests { get; set; }
+
         private int _TestIndex;
         public int TestIndex
         {
@@ -44,13 +64,10 @@ namespace EvaluadorRH.ViewModels
             set
             {
                 _TestIndex = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(ActualTest));
+                Raise(() => TestIndex);
+                Raise(() => ActualTest);
             }
         }
-        public DateTime TestDate { get; private set; }
-
-        public ObservableCollection<Test> Tests { get; set; }
         public Test ActualTest
         {
             get
@@ -59,68 +76,120 @@ namespace EvaluadorRH.ViewModels
                 {
                     return null;
                 }
-                return Tests[_TestIndex];
+
+                var test = Tests[_TestIndex];
+                Navigate(test);
+                return test;
+            }
+        }
+
+        private void Navigate(Test test)
+        {
+            Dispatcher.CurrentDispatcher.Invoke(() =>
+            {
+                if (Browser?.IsBrowserInitialized ?? false)
+                {
+                    if (test is WebTest webTest)
+                    {
+                        Browser.Load(webTest.Url);
+                    }
+                    else
+                    {
+                        Browser.LoadHtml(test.Html);
+                    }
+                }
+            }, DispatcherPriority.Send);
+        }
+
+
+        public Solution ActualSolution
+        {
+            get
+            {
+                if (_TestIndex >= Tests.Count || _TestIndex < 0)
+                {
+                    return null;
+                }
+                var solution = Solutions[_TestIndex];
+                return solution;
             }
         }
 
         private Stopwatch Timer;
         private System.Windows.Threading.DispatcherTimer DispatcherTimer;
-        public string Tiempo => String.Format("{0}:{1:00}:{2:00}",Timer.Elapsed.Hours, Timer.Elapsed.Minutes, Timer.Elapsed.Seconds);
-        private readonly Locker Locker;
-        public MainTestModel(Applicant Applicant)
+        public string TimeString => $"{Timer?.Elapsed.Hours}:{Timer?.Elapsed.Minutes:00}:{Timer?.Elapsed.Seconds:00}";
+
+        private MainTest _Test;
+        public MainTest Test
         {
-            this.Locker = new Locker();
-            this._TestIndex = -1;
-            this.ApplicantId = Applicant.Id;
-            this.ApplicantName = Applicant.FullName;
-            this.TestDate = DateTime.Now;
-            this.Tests = new ObservableCollection<Test>();
-            LoadTests();
-        }
-        private void LoadTests()
-        {
-            using (IReader reader = AppData.SQLHLite.Leector("SELECT ID,TITLE,MARKDOWN FROM TESTS"))
+            get => _Test;
+            set
             {
-                while (reader.Read())
-                {
-                    this.Tests.Add(new Test(Convert.ToInt32(reader[0]), Convert.ToString(reader[1]), Convert.ToString(reader[2]), string.Empty));
-                }
+                _Test = value;
+                Raise(() => Test);
+                Raise(() => Applicant);
             }
         }
+        public Applicant Applicant
+        {
+            get => Test.Applicant;
+            set
+            {
+                Test.Applicant = value;
+                Raise(() => Applicant);
+            }
+        }
+
+        public MainTestModel()
+        {
+
+        }
+        public MainTestModel(Applicant Applicant)
+        {
+            this._TestIndex = -1;
+            this.Test = new MainTest()
+            {
+                Applicant = Applicant,
+                Date = DateTime.Now
+            };
+            this.Tests = new ObservableCollection<Test>(Classes.Tests.Test.GetAll());
+            this.Solutions = new ObservableCollection<Solution>();
+
+        }
+
         public void Start()
         {
-            this.Locker.Hide();
-            Next();
-
+            Locker.Hide();
             this.Timer = new Stopwatch();
             this.DispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            this.DispatcherTimer.Tick += DispatcherTimer_Tick;
+            this.DispatcherTimer.Tick += (o, e) => Raise(() => TimeString);
             this.DispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             this.Timer.Start();
             this.DispatcherTimer.Start();
-
-            using (var con = AppData.SQLHLite.Conecction())
+            AppData.SQLiteConnection.Insert(this.Test);
+            Next();
+        }
+        public async Task<bool> Next()
+        {
+            
+            if (ActualSolution is not null)
             {
-                AppData.SQLHLite.EXEC(con,
-                    "INSERT INTO MAIN_TESTS(APPLICANT_ID,START_DATE,END_DATE,TIME_ELAPSED) VALUES(?,?,?,?)",
-                    ApplicantId,
-                    SQLHelper.SQLHelper.FormatTime(DateTime.Now),
-                    SQLHelper.SQLHelper.FormatTime(DateTime.Now),
-                    SQLHelper.SQLHelper.FormatTime(this.Timer.Elapsed));
-                this.Id = AppData.SQLHLite.LastScopeIdentity(con);
+                await this.ActualSolution.Save(this.Test.Id);
             }
-        }
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            OnPropertyChanged(nameof(Tiempo));
-        }
-        public bool Next()
-        {
-            this.ActualTest?.Save(this.Id);
+
             this.TestIndex++;
             if (this.TestIndex < this.Tests.Count)
             {
-                this.ActualTest.Start();
+                if (this.ActualTest is WebTest)
+                {
+                    this.Solutions.Add(new WebSolution());
+                }
+                else
+                {
+                    this.Solutions.Add(new TextSolution());
+                }
+                this.ActualSolution?.Start();
+                Raise(() => ActualSolution);
                 return true;
             }
             UpdateAndStop();
@@ -128,18 +197,14 @@ namespace EvaluadorRH.ViewModels
         }
         private void UpdateAndStop()
         {
-            if(Timer is null)
+            if (Timer is null)
             {
                 return;
             }
             this.Timer?.Stop();
             this.DispatcherTimer?.Stop();
-            this.Locker.Show();
-            AppData.SQLHLite.EXEC(
-                "UPDATE MAIN_TESTS SET END_DATE=?,TIME_ELAPSED=? WHERE ID=?",
-                SQLHelper.SQLHelper.FormatTime(DateTime.Now),
-                SQLHelper.SQLHelper.FormatTime(this.Timer.Elapsed),
-                ApplicantId);
+            Locker.Show();
+            AppData.SQLiteConnection.Update(this.Test);
         }
     }
 }

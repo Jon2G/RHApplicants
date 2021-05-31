@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kit;
+using Kit.Model;
 
 namespace EvaluadorRH.ViewModels
 {
-    public class AdminViewModel:ViewModelBase<AdminViewModel>
-    {
+    public class AdminViewModel:ModelBase    {
         public string AdminName { get; set; }
         public ObservableCollection<Applicant> Applicants { get; set; }
         public AdminViewModel()

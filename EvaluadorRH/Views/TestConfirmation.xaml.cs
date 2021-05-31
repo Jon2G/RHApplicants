@@ -1,6 +1,7 @@
 ﻿using EvaluadorRH.Classes;
-using EvaluadorRH.Controls;
+
 using EvaluadorRH.ViewModels;
+using Kit.WPF.Prims;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -24,23 +25,21 @@ namespace EvaluadorRH.Views
     /// </summary>
     public partial class TestConfirmation : NavigationUserControl
     {
-        public MainTestModel Model { get; set; }
-        public Applicant Applicant { get; set; }
+        public TestConfirmationViewModel Model { get; set; }
         public TestConfirmation(IRegionManager RegionManager) : base(RegionManager)
         {
+            this.Model = new TestConfirmationViewModel();
             InitializeComponent();
         }
         protected override void OnNavigatedTo()
         {
             base.OnNavigatedTo();
-            this.Applicant = this.GetParameter<Applicant>(nameof(Applicant));
-            this.Model = new MainTestModel(this.Applicant);
-            OnPropertyChanged(nameof(Model));
-            OnPropertyChanged(nameof(Applicant));
+            this.Model.Applicant = this.GetParameter<Applicant>(nameof(Applicant));
+            this.DataContext = this.Model;
         }
         private void Go_Click(object sender, RoutedEventArgs e)
         {
-            this.Push<MainTest>(new Dictionary<string, object>() { { nameof(Model), this.Model } });
+            this.Push<MainTest>(new Dictionary<string, object>() { { nameof(Applicant), this.Model.Applicant } });
         }
     }
 }

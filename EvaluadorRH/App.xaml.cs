@@ -13,8 +13,7 @@ namespace EvaluadorRH
     {
         protected override Window CreateShell()
         {
-            Locker l= new Locker();
-            l.Show();
+            Locker.Show();
             return Container.Resolve<MainWindow>();
         }
 

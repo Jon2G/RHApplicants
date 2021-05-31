@@ -1,7 +1,7 @@
 ﻿using HandyControl.Controls;
 using Kit;
-using SQLHelper;
-using SQLHelper.Reflection;
+using Kit.Sql;
+using Kit.Sql.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,34 +10,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using EvaluadorRH.Classes.Tests;
+using Kit.Model;
+using Kit.Sql.Sqlite;
 using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace EvaluadorRH.Classes
 {
-    public class AppData : ViewModelBase<AppData>
-    {
+    public class AppData : ModelBase    {
         public const string ContentRegion = "ContentRegion";
         public static AppData Instace { get; private set; }
-        public static SQLHLite SQLHLite { get; private set; }
+        public static SQLiteConnection SQLiteConnection { get; private set; }
         public Admin _Admin;
-        public Admin Admin { get => _Admin; set { _Admin = value; OnPropertyChanged(); } }
+        public Admin Admin { get => _Admin; set { _Admin = value; Raise(()=>Admin); } }
         private AppData() { }
         public static void Init()
         {
             AppData.Instace = new AppData();
-            SQLHelper.SQLHelper sqlhelper = SQLHelper.SQLHelper.Init(Environment.CurrentDirectory, Debugger.IsAttached);
-            Log.Init(sqlhelper.LibraryPath, CriticalLog);
-            AppData.SQLHLite = new SQLHLite("1.0.2", "Evaluador.db");
-            AppData.SQLHLite.SetDbScriptResource(typeof(AppData), "EditaLite.sql");
-            AppData.SQLHLite.RevisarBaseDatos();
+            Kit.WPF.Tools.Init();
+            AppData.SQLiteConnection = new SQLiteConnection(new FileInfo(Path.Combine(Tools.Instance.LibraryPath, "Evaluador.db")),111);
+            AppData.SQLiteConnection.CheckTables(
+                typeof(Admin),
+                typeof(School),
+                typeof(Applicant),
+                typeof(Test),
+                typeof(WebTest),
+                typeof(MainTest),
+                typeof(TextSolution),
+                typeof(WebSolution));
+
+            
+
         }
 
-        private static void CriticalLog(object sender, EventArgs e)
-        {
-            if (sender is string s)
-            {
-                MessageBox.Show(s, "Error critico!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using EvaluadorRH.Classes;
-using EvaluadorRH.Controls;
 using EvaluadorRH.Dialogs;
 using EvaluadorRH.ViewModels;
 using HandyControl.Controls;
+using Kit.WPF.Prims;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;

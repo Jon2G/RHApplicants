@@ -1,24 +1,54 @@
 ﻿
 using Kit;
-using SQLHelper;
+using Kit.Sql;
+using Kit.Sql.Helpers;
 using System;
 using System.Collections.Generic;
+using Kit.Model;
+using Kit.Sql.Attributes;
+using Kit.Sql.Readers;
+using System.Linq;
 
 namespace EvaluadorRH.Classes
 {
-    public class Applicant : ViewModelBase<Applicant>
+    [Table("APPLICANTS")]
+    public class Applicant : ModelBase
     {
-        public int Id { get; private set; }
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        [Ignore]
         public string FullName { get => $"{Name} {SurName1} {SurName2}"; }
         public string Name { get; set; }
         public string SurName1 { get; set; }
         public string SurName2 { get; set; }
-        public string School { get; set; }
+        [Ignore]
+        public School School { get; set; }
+
+        public int SchoolId
+        {
+            get => School.Id;
+            set => School = School.Get(value);
+        }
+        [Ignore]
+        public string SchoolName
+        {
+            get => School?.Name??string.Empty;
+            set
+            {
+                if (School is null)
+                {
+                    School = new School(value);
+                    return;
+                }
+                School.Name = value;
+                Raise(() => SchoolName);
+            }
+        }
         public string Grade { get; set; }
         public int Age { get; set; }
         public string FavoriteLanguaje { get; set; }
         public DateTime RegisterDate { get; set; }
-        public Applicant(int Id, string Name, string SurName1, string SurName2, string School, string Grade, int Age, string FavoriteLanguaje,
+        public Applicant(int Id, string Name, string SurName1, string SurName2, School School, string Grade, int Age, string FavoriteLanguaje,
             DateTime RegisterDate)
         {
             this.Id = Id;
@@ -31,41 +61,44 @@ namespace EvaluadorRH.Classes
             this.FavoriteLanguaje = FavoriteLanguaje;
             this.RegisterDate = RegisterDate;
         }
+
+        internal List<string> GetGrades()
+        {
+            var grades = new List<string>()
+            {
+                "1ero","2do","3ro","4to","5to","6to","7mo","8vo","9no"
+            };
+            grades.AddRange(AppData.SQLiteConnection.Lista<string>("SELECT DISTINCT GRADE FROM APPLICANTS"));
+            grades = grades.Distinct().ToList();
+            return grades;
+        }
+
+        internal List<string> GetLanguajes()
+        {
+            var languajes = new List<string>()
+            {
+                "C#","Java","VBA","Phyton","C/C++","F#"
+            };
+            languajes.AddRange(AppData.SQLiteConnection.Lista<string>("SELECT DISTINCT FavoriteLanguaje FROM APPLICANTS"));
+            languajes = languajes.Distinct().ToList();
+            return languajes;
+        }
+
         public Applicant()
         {
-            this.Id = -1;
+
         }
         public void Register()
         {
-            using (var con = AppData.SQLHLite.Conecction())
+            this.RegisterDate = DateTime.Now;
+            if (this.School.Id<=0)
             {
-                AppData.SQLHLite.EXEC(con,
-                    "INSERT INTO APPLICANTS(NAME,SURNAME1,SURNAME2,SCHOOL,GRADE,AGE,FAVORITE_LANGUAJE,REGISTER_DATE) VALUES(?,?,?,?,?,?,?,?)"
-                    , Name, SurName1, SurName2, School, Grade, Age, FavoriteLanguaje, SQLHelper.SQLHelper.FormatTime(DateTime.Now));
-                this.Id = AppData.SQLHLite.LastScopeIdentity(con);
+                School.Save();
             }
+            AppData.SQLiteConnection.Insert(this);
         }
-        public static List<Applicant> GetApplicants()
-        {
-            List<Applicant> applicants = new List<Applicant>();
-            using (IReader reader = AppData.SQLHLite.Leector("SELECT ID,NAME,SURNAME1,SURNAME2,SCHOOL,GRADE,AGE,FAVORITE_LANGUAJE,REGISTER_DATE FROM APPLICANTS ORDER BY ID DESC"))
-            {
-                while (reader.Read())
-                {
-                    applicants.Add(new Applicant(
-                        Convert.ToInt32(reader[0]),
-                        Convert.ToString(reader[1]),
-                        Convert.ToString(reader[2]),
-                        Convert.ToString(reader[3]),
-                        Convert.ToString(reader[4]),
-                        Convert.ToString(reader[5]),
-                        Convert.ToInt32(reader[6]),
-                        Convert.ToString(reader[7]),
-                        DateTime.Parse(Convert.ToString(reader[8]))
-                        ));
-                }
-            }
-            return applicants;
-        }
+        public static List<Applicant> GetApplicants() => AppData.SQLiteConnection.Table<Applicant>().ToList();
+
+        public Applicant Get(int value) => AppData.SQLiteConnection.Find<Applicant>(value);
     }
 }

@@ -2,7 +2,7 @@
 
 using Prism.Events;
 using Prism.Regions;
-using SQLHelper;
+using Kit.Sql.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Kit;
+using Kit.Model;
+using Kit.Sql;
+using Kit.Sql.Readers;
 
 namespace EvaluadorRH.ViewModels
 {
-    public class LoginModel : ViewModelBase<LoginModel>
-    {
+    public class LoginModel : ModelBase    {
         private string _Usuario;
         public string Usuario
         {
@@ -51,7 +53,7 @@ namespace EvaluadorRH.ViewModels
             {
                 return admin;
             }
-            using (IReader read = AppData.SQLHLite.Leector(
+            using (IReader read = AppData.SQLiteConnection.Read(
                 $"SELECT ID,USUARIO,NAME FROM ADMINISTRADORES WHERE USUARIO='{this.Usuario}' AND PASSWORD='{this.Password}'"))
             {
                 if (read.Read())

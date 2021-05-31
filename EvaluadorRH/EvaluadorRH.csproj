@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>EvaluadorRH</RootNamespace>
     <AssemblyName>EvaluadorRH</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
@@ -49,38 +52,29 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
-      <Version>86.0.241</Version>
+      <Version>90.6.50</Version>
     </PackageReference>
-    <PackageReference Include="HandyControls">
-      <Version>3.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.PLC">
-      <Version>1.0.0.8</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.Shared">
-      <Version>1.0.0.7</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.SQLHelper">
-      <Version>1.0.0.7</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.WPF">
-      <Version>1.0.0.7</Version>
+    <PackageReference Include="HandyControl">
+      <Version>3.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite">
-      <Version>5.0.1</Version>
+      <Version>5.0.6</Version>
     </PackageReference>
-    <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="Prism.Unity">
-      <Version>8.0.0.1909</Version>
+      <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net">
       <Version>1.6.292</Version>
+    </PackageReference>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.8.0-beta</Version>
     </PackageReference>
     <PackageReference Include="SQLite-Net.Extensions.Readers">
       <Version>2019.10930.3</Version>
@@ -89,7 +83,10 @@
       <Version>2.0.4</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite">
-      <Version>1.0.113.6</Version>
+      <Version>1.0.114</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>5.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -110,8 +107,13 @@
     <Compile Include="Classes\AppData.cs" />
     <Compile Include="Classes\Applicant.cs" />
     <Compile Include="Classes\Locker.cs" />
-    <Compile Include="Classes\Test.cs" />
-    <Compile Include="Controls\NavigationUserControl.cs" />
+    <Compile Include="Classes\School.cs" />
+    <Compile Include="Classes\Tests\MainTest.cs" />
+    <Compile Include="Classes\Tests\Solution.cs" />
+    <Compile Include="Classes\Tests\Test.cs" />
+    <Compile Include="Classes\Tests\TextSolution.cs" />
+    <Compile Include="Classes\Tests\WebSolution.cs" />
+    <Compile Include="Classes\Tests\WebTest.cs" />
     <Compile Include="Dialogs\ApplicantAccions.xaml.cs">
       <DependentUpon>ApplicantAccions.xaml</DependentUpon>
     </Compile>
@@ -119,9 +121,11 @@
       <DependentUpon>TextDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\ApplicantRegisterViewModel.cs" />
     <Compile Include="ViewModels\LoginModel.cs" />
     <Compile Include="ViewModels\MainTestModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\TestConfirmationViewModel.cs" />
     <Compile Include="Views\AdminView.xaml.cs">
       <DependentUpon>AdminView.xaml</DependentUpon>
     </Compile>
@@ -207,9 +211,6 @@
     <Resource Include="Resources\error.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EditaLite.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\programmer.png" />
   </ItemGroup>
   <ItemGroup>
@@ -235,18 +236,20 @@
     <Resource Include="Resources\like.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\SQLHelper\SQLHelper.csproj">
-      <Project>{8e4f2a93-4814-484a-8429-433576f898e5}</Project>
-      <Name>SQLHelper</Name>
+    <Folder Include="Controls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Kit\Kit.WPF\Kit.WPF.csproj">
+      <Project>{e8c86b4e-ce0a-41d7-ae43-bab248b4241d}</Project>
+      <Name>Kit.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\Tools\Tools.csproj">
-      <Project>{08a6454b-38d5-492b-bc3a-11991bbeb0e6}</Project>
-      <Name>Tools</Name>
+    <ProjectReference Include="..\..\..\Kit\Kit\Kit.csproj">
+      <Project>{c517465c-55e4-447d-a712-79c65ee23a8c}</Project>
+      <Name>Kit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Documents\Jonathan\Xamarin.Tools\Xamarin.Tools\Xamarin.Tools.csproj">
-      <Project>{bcecbe41-d322-4fd4-a5d7-27afdb4a048e}</Project>
-      <Name>Xamarin.Tools</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,10 @@
-﻿using EvaluadorRH.Controls;
+﻿using CefSharp;
+using CefSharp.Wpf;
+using EvaluadorRH.Classes;
+using EvaluadorRH.Classes.Tests;
 using EvaluadorRH.ViewModels;
 using HandyControl.Data;
+using Kit.WPF.Prims;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -25,21 +29,27 @@ namespace EvaluadorRH.Views
     /// </summary>
     public partial class MainTest : NavigationUserControl
     {
-        public MainTestModel Model { get; set; }
+        public MainTestModel _Model;
+        public MainTestModel Model { get => _Model; set { _Model = value; Raise(() => Model); } }
         public MainTest(IRegionManager RegionManager) : base(RegionManager)
         {
+            this.DataContext = this;
             InitializeComponent();
+
         }
         protected override void OnNavigatedTo()
         {
-            base.OnNavigatedTo();
-            this.Model = GetParameter<MainTestModel>(nameof(Model));
-            OnPropertyChanged(nameof(Model));
+            //base.OnNavigatedTo();
+            this.Model = new MainTestModel(GetParameter<Applicant>(nameof(Applicant)));
+            this.DataContext = this.Model;
+            Raise(() => Model);
+
+            if (Application.Current.MainWindow is not null)
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
             this.Model.Start();
-            Window.GetWindow(this).WindowState = WindowState.Maximized;
         }
 
-        private void Continuar(object sender, RoutedEventArgs e)
+        private async void Continuar(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show(new MessageBoxInfo()
             {
@@ -48,11 +58,11 @@ namespace EvaluadorRH.Views
                 Message = "¿Está seguro de continuar, ya no podrá volver?",
                 Caption = "Alerta",
                 Button = MessageBoxButton.YesNo,
-                YesContent = "No",
-                NoContent = "Sí"
-            }) == MessageBoxResult.No)
+                //YesContent = "No",
+                //NoContent = "Sí"
+            }) == MessageBoxResult.Yes)
             {
-                if (!this.Model.Next())
+                if (!await this.Model.Next())
                 {
                     this.PopAll();
                     this.Push<TestEnd>(new Dictionary<string, object>() { { nameof(Model), Model } });
