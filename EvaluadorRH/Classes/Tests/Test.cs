@@ -63,7 +63,9 @@ namespace EvaluadorRH.Classes.Tests
       <h3>Ejemplo:</h3>
 <p>
     Entrada:		        10, 15, 20, 8
+<br/>
     Salida [decreciente]:  	20, 15, 10, 8
+<br/>
     Salida [creciente]:  	 8, 10, 15, 20
 </p>
 </html>"),

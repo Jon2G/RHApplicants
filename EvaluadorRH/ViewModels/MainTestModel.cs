@@ -89,14 +89,14 @@ namespace EvaluadorRH.ViewModels
             {
                 if (Browser?.IsBrowserInitialized ?? false)
                 {
-                    if (test is WebTest webTest)
-                    {
-                        Browser.Load(webTest.Url);
-                    }
-                    else
-                    {
+                    //if (test is WebTest webTest)
+                    //{
+                    //    Browser.Load(webTest.Url);
+                    //}
+                    //else
+                    //{
                         Browser.LoadHtml(test.Html);
-                    }
+                    //}
                 }
             }, DispatcherPriority.Send);
         }
