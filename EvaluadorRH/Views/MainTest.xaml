@@ -12,7 +12,7 @@
              xmlns:viewModels="clr-namespace:EvaluadorRH.ViewModels"
              xmlns:cefSharpCore="clr-namespace:CefSharp;assembly=CefSharp.Core"
              mc:Ignorable="d"  x:Name="Me"
-             d:DataContext="{viewModels:MainTestModel}"
+             d:DataContext="{d:DesignInstance viewModels:MainTestModel}"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <hc:TransitioningContentControl DataContext="{Binding Model,ElementName=Me}">
@@ -59,13 +59,18 @@
                                     Content="{Binding Model.ActualSolution ,ElementName=Me}">
                         <ContentControl.Resources>
                             <DataTemplate DataType="{x:Type test:WebSolution}">
-                                <cefSharp:ChromiumWebBrowser 
-                                            d:DataContext="{test:WebTest}"
-                                            Address="{Binding Model.ActualTest.Url,ElementName=Me, Mode=OneWay}"
-                                            AllowDrop="False">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30*"/>
+                                        <ColumnDefinition Width="70*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <cefSharp:ChromiumWebBrowser Grid.Column="1"
+                                                                 d:DataContext="{test:WebTest}"
+                                                                 Address="{Binding Model.ActualTest.Url,ElementName=Me, Mode=OneWay}"
+                                                                 AllowDrop="False"/>
 
-                                </cefSharp:ChromiumWebBrowser>
-
+                                    <hc:Card Content="{Binding Model.Browser,ElementName=Me}"/>
+                                </Grid>
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type test:TextSolution}">
                                 <Grid >
