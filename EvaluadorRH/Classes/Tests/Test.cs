@@ -43,14 +43,27 @@ namespace EvaluadorRH.Classes.Tests
         public static void InitTable()
         {
             AppData.SQLiteConnection.InsertAll(
-                new Test("Código ASCII", @"<!DOCTYPE html>
+                new Test("Código ASCII", @"
+<!DOCTYPE html>
 <html>
     <h2> Programa que muestre en pantalla los caracteres del código ASCII y su combinación de teclado:</h2>
    <h3>Ejemplo</h3>
      <p>
         Alt + 85 =''U''
      </p> 
-</html>"),
+<style>
+ h2{
+ font-size:26px;
+}
+ h3{
+ font-size:25px;
+}
+ p {
+ font-size:23px;
+}
+</style>
+</html>
+"),
                 new Test("Ordenamiento", @"<!DOCTYPE html>
 <html>
     <h2> Se desea realizar un algoritmo que realice las siguientes tareas: </h2>
@@ -68,6 +81,17 @@ namespace EvaluadorRH.Classes.Tests
 <br/>
     Salida [creciente]:  	 8, 10, 15, 20
 </p>
+<style>
+ h2{
+ font-size:26px;
+}
+ h3{
+ font-size:25px;
+}
+ p ,li{
+ font-size:23px;
+}
+</style>
 </html>"),
                 new Test("Pilares POO", @"<!DOCTYPE html>
 <html>
@@ -79,11 +103,32 @@ namespace EvaluadorRH.Classes.Tests
         <li>¿Cómo definiría de forma sencilla el herencia/sobreescritura? Mencione un ejemplo simple. </li>
         <li>¿Cómo definiría de forma sencilla el encapsulamiento? Mencione un ejemplo simple. </li>
     </ul>
-
+<style>
+ h2{
+ font-size:26px;
+}
+ h3{
+ font-size:25px;
+}
+ p,li {
+ font-size:23px;
+}
+</style>
 </html>"),
                 new Test("Abstracción", @"<!DOCTYPE html>
 <html>
     <h3> Crea un modelo de datos que permita representar una lista de compras para un restaurante (incluye todos los campos que consideres importantes)</h2>
+<style>
+ h2{
+ font-size:26px;
+}
+ h3{
+ font-size:25px;
+}
+ p {
+ font-size:23px;
+}
+</style>
 </html>"),
                 new Test("Análisis de código", @"<!DOCTYPE html>
 <html>
@@ -100,7 +145,7 @@ namespace EvaluadorRH.Classes.Tests
         
             void Acelerar(int Fuerza)</br>
             {</br>
-                //Instrucciones</br>
+                this->Fuerza+=Fuerza;</br>
             }</br>
         
             //Que hace este método?</br>
@@ -110,6 +155,7 @@ namespace EvaluadorRH.Classes.Tests
                 this->Nombre = Marca;</br>
             }</br>
         private:</br>
+            float Fuerza;
             std::string Nombre;</br>
         };</br>
         
@@ -134,7 +180,17 @@ namespace EvaluadorRH.Classes.Tests
         
        
       </ul>
-
+<style>
+ h2{
+ font-size:26px;
+}
+ h3{
+ font-size:25px;
+}
+ p,li {
+ font-size:23px;
+}
+</style>
 </html>")
                 );
 

@@ -43,6 +43,17 @@ namespace EvaluadorRH.Classes.Tests
             <li>Existencia</li>
         </ul>
       </ul>
+<style>
+ h2{
+ font-size:26px;
+}
+ h3{
+ font-size:25px;
+}
+ p,li {
+ font-size:23px;
+}
+</style>
 </html>", "https://ninjamock.com/s/MZGZDHx"));
         }
     }

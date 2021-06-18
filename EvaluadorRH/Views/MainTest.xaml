@@ -64,7 +64,7 @@
                                         <ColumnDefinition Width="30*"/>
                                         <ColumnDefinition Width="70*"/>
                                     </Grid.ColumnDefinitions>
-                                    <cefSharp:ChromiumWebBrowser Grid.Column="1"
+                                    <cefSharp:ChromiumWebBrowser Grid.Column="1" FontSize="20"
                                                                  d:DataContext="{test:WebTest}"
                                                                  Address="{Binding Model.ActualTest.Url,ElementName=Me, Mode=OneWay}"
                                                                  AllowDrop="False"/>
@@ -87,10 +87,10 @@
                                     </DockPanel>
                                     <DockPanel Grid.Column="1">
                                         <TextBlock DockPanel.Dock="Top" FontSize="16" Text="Lenguaje:" Margin="5"/>
-                                        <TextBox Margin="5" DockPanel.Dock="Top"  FontSize="16" Text="{Binding Languaje,Mode=TwoWay}"/>
+                                        <TextBox Margin="5" DockPanel.Dock="Top"  FontSize="18" Text="{Binding Languaje,Mode=TwoWay}"/>
                                         <TextBox DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled" AcceptsTab="True" TextWrapping="Wrap" VerticalContentAlignment="Stretch"
                                                  AcceptsReturn="True" Text="{Binding Answer ,Mode=TwoWay}"
-                                                 VerticalScrollBarVisibility="Visible" Margin="5" FontSize="14"/>
+                                                 VerticalScrollBarVisibility="Visible" Margin="5" FontSize="18"/>
                                     </DockPanel>
                                 </Grid>
                             </DataTemplate>
