@@ -22,6 +22,7 @@ namespace EvaluadorRH.ViewModels
     public class MainTestModel : ModelBase
     {
         private IWebBrowser _Browser;
+
         public IWebBrowser Browser
         {
             get
@@ -53,11 +54,11 @@ namespace EvaluadorRH.ViewModels
             }
         }
 
-
         public ObservableCollection<Solution> Solutions { get; set; }
         public ObservableCollection<Test> Tests { get; set; }
 
         private int _TestIndex;
+
         public int TestIndex
         {
             get => _TestIndex;
@@ -68,6 +69,7 @@ namespace EvaluadorRH.ViewModels
                 Raise(() => ActualTest);
             }
         }
+
         public Test ActualTest
         {
             get
@@ -101,7 +103,6 @@ namespace EvaluadorRH.ViewModels
             }, DispatcherPriority.Send);
         }
 
-
         public Solution ActualSolution
         {
             get
@@ -120,6 +121,7 @@ namespace EvaluadorRH.ViewModels
         public string TimeString => $"{Timer?.Elapsed.Hours}:{Timer?.Elapsed.Minutes:00}:{Timer?.Elapsed.Seconds:00}";
 
         private MainTest _Test;
+
         public MainTest Test
         {
             get => _Test;
@@ -130,6 +132,7 @@ namespace EvaluadorRH.ViewModels
                 Raise(() => Applicant);
             }
         }
+
         public Applicant Applicant
         {
             get => Test.Applicant;
@@ -142,8 +145,8 @@ namespace EvaluadorRH.ViewModels
 
         public MainTestModel()
         {
-
         }
+
         public MainTestModel(Applicant Applicant)
         {
             this._TestIndex = -1;
@@ -154,10 +157,9 @@ namespace EvaluadorRH.ViewModels
             };
             this.Tests = new ObservableCollection<Test>(Classes.Tests.Test.GetAll());
             this.Solutions = new ObservableCollection<Solution>();
-
         }
 
-        public void Start()
+        public async void Start()
         {
             Locker.Hide();
             this.Timer = new Stopwatch();
@@ -167,11 +169,11 @@ namespace EvaluadorRH.ViewModels
             this.Timer.Start();
             this.DispatcherTimer.Start();
             AppData.SQLiteConnection.Insert(this.Test);
-            Next();
+            await Next();
         }
+
         public async Task<bool> Next()
         {
-            
             if (ActualSolution is not null)
             {
                 await this.ActualSolution.Save(this.Test.Id);
@@ -195,6 +197,7 @@ namespace EvaluadorRH.ViewModels
             UpdateAndStop();
             return false;
         }
+
         private void UpdateAndStop()
         {
             if (Timer is null)
